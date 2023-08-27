@@ -15,7 +15,7 @@
         <div class="weather">
             <img src="/images/rain.png" class="bigicon">
             <h1 class="temp">00° C</h1>
-            <h3 class="place">Location</h3>
+            <h3 class="place">Location<br><h4 class="cond">Condition</h6></h3>
             <div class="details">
                 <div class="col1">
                     <img src="/images/humidity.png">
@@ -144,16 +144,38 @@ async function checkweather(x){
     console.log(data)
 
     document.querySelector('.place').innerHTML=data.name
-    document.querySelector('.temp').innerHTML=data.main.temp
+    document.querySelector('.temp').innerHTML=data.main.temp+'°C'
     document.querySelector('.windspeed').innerHTML=data.wind.speed
     document.querySelector('.humidity').innerHTML=data.main.humidity+'%'
+    document.querySelector('.cond').innerHTML=data.weather[0].main
+    
+    
+
+    if(data.weather[0].main=='Drizzle'){
+        document.querySelector('.bigicon').src='images/drizzle.png'
+    }
+    else if(data.weather[0].main=='Clouds'||data.weather[0].main=='Haze'){
+        document.querySelector('.bigicon').src='images/clouds.png'
+    }
+    else if(data.weather[0].main=='Mist'){
+        document.querySelector('.bigicon').src='images/mist.png'
+    }
+    else if(data.weather[0].main=='Snow'){
+        document.querySelector('.bigicon').src='images/snow.png'
+    }
+    else if(data.weather[0].main=='Clear'){
+        document.querySelector('.bigicon').src='images/clear.png'
+    }
+    if(data.weather[0].main=='Rain'){
+        document.querySelector('.bigicon').src='images/rain.png'
+    }
 }
 function getresults(){
   y=document.querySelector('.searchbar').value
   try {
     checkweather(y)
   } 
-  catch (TypeErrors) {
+  catch (Error) {
     alert('City not found')
   }
   checkweather(y)
