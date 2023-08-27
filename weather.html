@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="boxx">
+        <div class="search">
+            <input class="searchbar" type="text" placeholder="Enter City Name" spellcheck="false">
+            <button class="butt" onclick="getresults()"><i id="icon" class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="weather">
+            <img src="/images/rain.png" class="bigicon">
+            <h1 class="temp">00° C</h1>
+            <h3 class="place">Location</h3>
+            <div class="details">
+                <div class="col1">
+                    <img src="/images/humidity.png">
+                    <div>
+                        <p class="humidity">0%</p>
+                        <p>humidity</p>
+                    </div>
+                </div>
+                <div class="col1">
+                    <img src="/images/wind.png">
+                    <div>
+                        <p class="windspeed">00 km/h</p>
+                        <p>Wind speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    body{
+        background: rgb(53, 51, 51);
+    }
+    .boxx{
+        width: 90%;
+        max-width: 470px;
+        background:linear-gradient(180deg, rgb(197, 148, 238),rgb(104, 2, 172));
+        color: white;
+        margin: 20px auto;
+        border-radius: 20px;
+        padding: 40px 35px;
+        text-align: center;
+    }
+    .search{
+        width:100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .search input{
+        border: 0;
+        outline: 0;
+        background: #ebfffc;
+        color: #555;
+        padding: 10px 25px;
+        height: 60px;
+        border-radius: 30px;
+        flex: 1;
+        margin-right: 16px;
+        font-size:18px;
+    }
+    .search button{
+        border: none;
+        width: 55px;
+        height: 55px;
+        border-radius: 25px;
+    }
+    .search button :hover{
+        cursor: pointer;
+    }
+    .search button:active{
+        background-color: rgb(17, 16, 16);
+        color: white;
+    }
+    .search button i{
+        font-size: 40px;
+        border-radius: 25px;
+        outline: 0;
+        background: transparent;   
+    }
+    .place{
+        margin-top: 3px;
+    }
+    .bigicon{
+       margin-top: 10px;
+       width: 180px; 
+    }
+    .temp{
+        margin-top: -15px;
+        font-size: 69px;
+        font-weight: 500;
+    }
+    .place{
+        font-size: 45px;
+        font-weight: 400;
+        margin-top: -10px;
+    }
+    .details{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        margin-top: 50px;
+    }
+    .col1{
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+    .col1 img{
+        width: 50px;
+        margin-right:10px;
+    }
+    .humidity,.windspeed{
+      font-size: 28px;
+      text-align: center;
+    }
+</style>
+
+<script>
+const ApiKey="6ffa4f12fffed045029762bdcd890c70"
+const Apiurl='https://api.openweathermap.org/data/2.5/weather?units=metric&q='
+var x='kolkata'
+
+async function checkweather(x){
+    const response=await fetch(Apiurl+x+`&appid=${ApiKey}`)
+    var data = await response.json() //contains all info
+    console.log(data)
+
+    document.querySelector('.place').innerHTML=data.name
+    document.querySelector('.temp').innerHTML=data.main.temp
+    document.querySelector('.windspeed').innerHTML=data.wind.speed
+    document.querySelector('.humidity').innerHTML=data.main.humidity+'%'
+}
+function getresults(){
+  y=document.querySelector('.searchbar').value
+  try {
+    checkweather(y)
+  } 
+  catch (TypeErrors) {
+    alert('City not found')
+  }
+  checkweather(y)
+}
+checkweather(x)
+</script>
